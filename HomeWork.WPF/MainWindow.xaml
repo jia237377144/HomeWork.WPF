@@ -17,11 +17,11 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="200"/>
+            <RowDefinition Height="100"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="1">
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="10">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>
@@ -32,10 +32,10 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="User Name: " TextAlignment="Right" VerticalAlignment="Center" FontSize="20"></TextBlock>
-                <TextBox Grid.Row="0" Grid.Column="1" x:Name="UserName"  Text="User Name" MaxLines="1" FontSize="20"/>
+                <TextBox Grid.Row="0" Grid.Column="1" x:Name="UserName"   Text="{Binding UserName,Mode=TwoWay}" MaxLines="1" FontSize="20"/>
                 <TextBlock Grid.Row="0" Grid.Column="2" Text="Department1: " TextAlignment="Right" VerticalAlignment="Center" FontSize="20"></TextBlock>
                 <ComboBox Grid.Row="0" Grid.Column="3" x:Name="cbxDepartment1" FontSize="20" ItemsSource="{Binding Department1,Mode=TwoWay}" DisplayMemberPath="Name" SelectedValuePath="Id" SelectedValue="{Binding SelectDepartment1,Mode=TwoWay}">
                 </ComboBox>
@@ -50,15 +50,14 @@
                             <ColumnDefinition Width="200"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Content="Search" HorizontalAlignment="Center" Width="200" Margin="5" Click="BTNSearch_Click"/>
-                        <Button Grid.Column="1" Content="Add"  HorizontalAlignment="Center" Width="200" Margin="5" Click="BTNAdd_Click"/>
+                        <Button Grid.Column="0" Content="Search" HorizontalAlignment="Center" Width="200" Margin="5" Command="{Binding SearchCommand}"/>
+                        <Button Grid.Column="1" Content="Add"  HorizontalAlignment="Center" Width="200" Margin="5"  Command="{Binding OpenWindowCommand}"/>
                     </Grid>
                 </StackPanel>
             </Grid>
         </StackPanel>
-
-        <DataGrid Grid.Row="1" 
-                  Grid.Column="0"
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="10">
+            <DataGrid 
                   x:Name="dataGrid" 
                   ItemsSource="{Binding Employees,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" 
                   AutoGenerateColumns="False" 
@@ -66,14 +65,38 @@
                   IsReadOnly="True"
                   HorizontalAlignment="Left" 
                   VerticalAlignment="Center">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="UserName" Binding="{Binding UserName}" Width="200"/>
-                <DataGridTextColumn Header="Sex" Binding="{Binding Sex}" Width="100"/>
-                <DataGridTextColumn Header="Department1" Binding="{Binding Department1}" Width="400"/>
-                <DataGridTextColumn Header="Department2" Binding="{Binding Department2}" Width="400"/>
-                <DataGridTextColumn Header="Operation" Width="*" />
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="UserName" Binding="{Binding UserName}" Width="200"/>
+                    <DataGridTextColumn Header="Sex" Binding="{Binding Sex}" Width="100"/>
+                    <DataGridTextColumn Header="Department1" Binding="{Binding Department1}" Width="150"/>
+                    <DataGridTextColumn Header="Department2" Binding="{Binding Department2}" Width="150"/>
+                    <DataGridTemplateColumn Header="Operation" Width="*" MinWidth="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button
+                                    x:Name="gridEdit"
+                                    Width="30"
+                                    Height="20"
+                                    Margin="10,0,0,0"
+                      
+                                    CommandParameter="{Binding ID}"
+                                    Content="编辑" />
+                                    <Button
+                                    x:Name="gridDele"
+                                    Width="30"
+                                    Height="20"
+                                    Margin="10,0,0,0"
+                                    Command="{Binding DeleCommand}"
+                                    CommandParameter="{Binding ID}"
+                                    Content="删除" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
 
     </Grid>
 </Window>

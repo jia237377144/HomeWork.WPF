@@ -62,43 +62,31 @@ namespace HomeWork.WPF.ViewModel
         }
 
 
+        public Action<Employee> AddEmployee;
         public ICommand SaveCommand
         {
             get
             {
-              return  new DelegateCommand(SaveEmployee);
+              return  new DelegateCommand<Window>(SaveEmployee);
             }
         }
-        public void SaveEmployee(object obj)
+        public void SaveEmployee(Window window)
         {
             Employee employee = new Employee
             {
                 UserName = this._userName
             };
-            Employee.EMPLOYEES.Add(employee);
-            this.WindowResult = true;
-            RaisePropertyChanged("Employee.EMPLOYEES");
-        }
-
-
-        private bool? dialogResult;
-        public bool? WindowResult
-        {
-            get { return this.dialogResult; }
-            set
-            {
-                this.dialogResult = value;
-                RaisePropertyChanged("WindowResult");
-            }
+            AddEmployee(employee);
+            window.Hide();
         }
 
         public ICommand CancelCommand
         {
             get
             {
-                return new DelegateCommand((obj) =>
+                return new DelegateCommand<Window>((Window window) =>
                 {
-                    this.WindowResult = true;
+                    window.Hide();
                 });
             }
         }

@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         xmlns:vm="clr-namespace:HomeWork.WPF.ViewModel"
         xmlns:vc="clr-namespace:HomeWork.WPF"
-        vc:WindowCloser.WindowResult="{Binding WindowResult}"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        x:Name="EmployeeWindowName"
         Title="Employee" Height="450" Width="800">
 
     <Window.DataContext>
@@ -42,8 +42,10 @@
         <ComboBox Grid.Row="3" Grid.Column="1" x:Name="cbxDepartment2" FontSize="20" ItemsSource="{Binding Department2, Mode=TwoWay}" DisplayMemberPath="Name" SelectedValuePath="Id">
         </ComboBox>
 
-        <Button Grid.Row="4" Grid.Column="0" Content="Cancel"  Style="{StaticResource btninfostyle}" Command="{Binding CancelCommand}"/>
+        <Button Grid.Row="4" Grid.Column="0" Content="Cancel"  Style="{StaticResource btninfostyle}" Command="{Binding CancelCommand}" 
+                CommandParameter="{Binding ElementName=EmployeeWindowName}"/>
 
-        <Button Grid.Row="4" Grid.Column="1" Content="Save" Style="{StaticResource btninfostyle}"  Command="{Binding SaveCommand}"/>
+        <Button Grid.Row="4" Grid.Column="1" Content="Save" Style="{StaticResource btninfostyle}"  Command="{Binding SaveCommand}" 
+                CommandParameter="{Binding ElementName=EmployeeWindowName}"/>
     </Grid>
 </Window>

@@ -31,6 +31,7 @@ namespace HomeWork.WPF.Model
         public int Sex { get; set; }
         public int Department1 { get; set; }
         public int Department2 { get; set; }
+        public bool IsValid { get; set; } = true;
 
     }
 }
